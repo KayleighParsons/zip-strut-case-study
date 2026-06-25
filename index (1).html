@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZIP-STRUT Case Study — Wigston College | Zip-Clip</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #FF8200;
+    --charcoal: #3C3A3C;
+    --light-grey: #f5f5f5;
+    --mid-grey: #e0e0e0;
+    --text: #3C3A3C;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--charcoal);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--orange);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-label {
+    font-family: 'Kanit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    color: var(--white);
+    margin-bottom: 16px;
+    max-width: 800px;
+  }
+  .hero-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    color: rgba(255,255,255,0.72);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-meta-item span:first-child {
+    font-family: 'Kanit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .hero-meta-item span:last-child {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* ── STAT BAR ── */
+  .stat-bar {
+    background: var(--orange);
+    padding: 0 40px;
+  }
+  .stat-bar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+  }
+  .stat {
+    flex: 1;
+    padding: 24px 0;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-value {
+    font-family: 'Kanit', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── LAYOUT HELPERS ── */
+  .section {
+    padding: 64px 40px;
+  }
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section--grey { background: var(--light-grey); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .two-col--reverse { direction: rtl; }
+  .two-col--reverse > * { direction: ltr; }
+
+  .section-tag {
+    font-family: 'Kanit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-size: clamp(22px, 3.5vw, 34px);
+    color: var(--charcoal);
+    margin-bottom: 20px;
+  }
+  .section p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── IMAGE PANEL ── */
+  .img-panel {
+    position: relative;
+  }
+  .img-panel img {
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .img-panel img:hover { opacity: 0.9; }
+
+  /* ── GALLERY GRID ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .gallery-grid img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .gallery-grid img:hover { opacity: 0.88; }
+  .gallery-main img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    display: block;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.8;
+    background: none;
+    border: none;
+  }
+  .lightbox-close:hover { opacity: 1; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 4px solid var(--orange);
+    padding: 20px 24px;
+    background: var(--white);
+    margin: 28px 0;
+  }
+  .pull-quote p {
+    font-family: 'Kanit', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--charcoal);
+    font-style: italic;
+    margin-bottom: 8px !important;
+    line-height: 1.5;
+  }
+  .pull-quote cite {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-style: normal;
+  }
+
+  /* ── OUTCOMES LIST ── */
+  .outcomes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .outcomes-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mid-grey);
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+  }
+  .outcomes-list li:last-child { border-bottom: none; }
+  .outcomes-list li::before {
+    content: '';
+    flex-shrink: 0;
+    margin-top: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+  }
+
+  /* ── PRODUCT HIGHLIGHT ── */
+  .product-highlight {
+    background: var(--charcoal);
+    padding: 48px 40px;
+  }
+  .product-highlight-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .product-highlight h2 {
+    color: var(--white);
+    font-size: clamp(22px, 3.5vw, 34px);
+    margin-bottom: 16px;
+  }
+  .product-highlight p {
+    color: rgba(255,255,255,0.72);
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .product-highlight p:last-of-type { margin-bottom: 0; }
+
+  .feature-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .pill {
+    background: rgba(255,130,0,0.15);
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    font-family: 'Kanit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+  }
+
+  /* ── INTERACTIVE: CALCULATOR ── */
+  .calc-section {
+    background: var(--charcoal);
+    padding: 64px 40px;
+  }
+  .calc-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .calc-inner .section-tag { color: var(--orange); }
+  .calc-inner h2 { color: var(--white); font-size: clamp(22px, 3.5vw, 34px); margin-bottom: 8px; }
+  .calc-sub { color: rgba(255,255,255,0.65); font-size: 15px; margin-bottom: 36px; }
+
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .calc-controls { display: flex; flex-direction: column; gap: 20px; }
+
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-group label {
+    font-family: 'Kanit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .field-group input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    outline: none;
+    cursor: pointer;
+  }
+  .field-group input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+  }
+  .range-val {
+    font-family: 'Kanit', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--orange);
+  }
+  .field-group select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    padding: 10px 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+  }
+  .field-group select option { background: var(--charcoal); color: white; }
+
+  .calc-result {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 28px;
+  }
+  .calc-result h3 {
+    font-family: 'Kanit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-row span:first-child { color: rgba(255,255,255,0.65); }
+  .result-row span:last-child { font-weight: 700; color: var(--white); }
+  .result-row.highlight span:last-child { color: var(--orange); font-size: 18px; font-family: 'Kanit', sans-serif; }
+
+  .saving-banner {
+    margin-top: 20px;
+    background: rgba(255,130,0,0.15);
+    border: 1px solid var(--orange);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .saving-banner svg { flex-shrink: 0; }
+  .saving-banner p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; margin: 0; }
+  .saving-banner strong { color: var(--orange); }
+  .calc-disclaimer { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 16px; line-height: 1.5; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--orange);
+    padding: 56px 40px;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'Kanit', sans-serif;
+    font-size: clamp(24px, 4vw, 40px);
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.85);
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+  .btn {
+    display: inline-block;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-white {
+    background: var(--white);
+    color: var(--orange);
+    border: 2px solid var(--white);
+  }
+  .btn-white:hover { background: transparent; color: var(--white); }
+  .btn-outline-white {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+    margin-left: 12px;
+  }
+  .btn-outline-white:hover { background: var(--white); color: var(--orange); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .section { padding: 48px 20px; }
+    .hero { padding: 48px 20px 40px; }
+    .stat-bar { padding: 0 20px; }
+    .two-col { grid-template-columns: 1fr; gap: 36px; }
+    .two-col--reverse { direction: ltr; }
+    .product-highlight { padding: 48px 20px; }
+    .product-highlight-inner { grid-template-columns: 1fr; gap: 36px; }
+    .calc-section { padding: 48px 20px; }
+    .calc-grid { grid-template-columns: 1fr; gap: 32px; }
+    .stat-bar-inner { flex-wrap: wrap; }
+    .stat { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.2); }
+    .cta-section { padding: 48px 20px; }
+    .hero-meta { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Case Study — ZIP-STRUT</div>
+    <h1>Fast, flexible containment for a tight corridor installation</h1>
+    <p class="hero-sub">Penguin MEP needed a multi-service suspension solution that could handle restricted corridor access and a timber-frame build — and have it up and running in a single day.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span>Contractor</span>
+        <span>Penguin MEP</span>
+      </div>
+      <div class="hero-meta-item">
+        <span>Wholesaler</span>
+        <span>CEF, Wigston</span>
+      </div>
+      <div class="hero-meta-item">
+        <span>Area Sales Manager</span>
+        <span>Steve Blackhurst</span>
+      </div>
+      <div class="hero-meta-item">
+        <span>Sector</span>
+        <span>Education</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat">
+      <span class="stat-value">1 Day</span>
+      <span class="stat-label">Full Install</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">48hrs</span>
+      <span class="stat-label">Design Turnaround</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">2</span>
+      <span class="stat-label">Containment Routes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">Ready</span>
+      <span class="stat-label">Pre-Assembled Delivery</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW + CHALLENGE -->
+<div class="section">
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="img-panel">
+        <div class="gallery-main">
+          <img src="https://zip-clip.com/wp-content/uploads/2026/06/Wigston-College-1.png" alt="Wigston College exterior" onclick="openLightbox(this.src)">
+        </div>
+        <div class="gallery-grid">
+          <img src="https://zip-clip.com/wp-content/uploads/2026/06/Wigston-College-2.png" alt="ZIP-STRUT installation corridor" onclick="openLightbox(this.src)">
+          <img src="https://zip-clip.com/wp-content/uploads/2026/06/Wigston-College-3.png" alt="ZIP-STRUT tray clip detail" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">Project Overview</div>
+        <h2>Restricted corridor. Two containment routes. One deadline.</h2>
+        <p>Penguin MEP required a suspension solution that would significantly reduce installation time while overcoming the challenges presented by a restricted corridor space and a timber-framed construction environment.</p>
+        <p>The project required substantial containment for both mechanical and electrical services within narrow corridor spaces. Due to limited access, running cable trays, pipework and associated services on a single containment route would have created significant installation difficulties.</p>
+        <p>To address this, the containment had to be split across two separate bracket systems running along the corridor — increasing the need for a suspension solution that was quick to install, easy to access, and suitable for the building's timber frame construction.</p>
+
+        <div class="pull-quote">
+          <p>"Out of the box and up in the air in minutes!"</p>
+          <cite>Site Installer, Penguin MEP</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUTION -->
+<div class="section section--grey">
+  <div class="section-inner">
+    <div class="two-col two-col--reverse">
+      <div>
+        <div class="section-tag">The Solution</div>
+        <h2>ZIP-STRUT — pre-assembled, delivered ready to install</h2>
+        <p>After reviewing the challenges Penguin MEP were facing, we recommended ZIP-STRUT. Designed to save time on site, ZIP-STRUT is pre-assembled off-site and delivered ready to install, helping to significantly reduce installation time.</p>
+        <p>The system also offers excellent accessibility, with simple post-installation adjustment and reusable basket tabs that make future modifications quick and straightforward.</p>
+        <p>By combining the system with our Tray Clips, installers could easily position, adjust and securely fix cable tray within the multi-service strut arrangement — making the whole installation process faster and more efficient.</p>
+        <p>Using a Zip-Clip solution also gave Penguin MEP access to a wide range of fixing options, making it easy to work with the building's timber-frame construction. Before installation began, Penguin worked closely with our in-house technical team to develop the ideal combination of strut lengths, fixings and components — with UNI-Lock identified as the perfect option for the material.</p>
+
+        <div class="pull-quote">
+          <p>"We can't believe how quick and secure these tray clips are… game changing!"</p>
+          <cite>Site Installer, Penguin MEP</cite>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">Site Visit</div>
+        <h2>James Horton &amp; Katie George on site mid-install</h2>
+        <p>James Horton (R&amp;D Commercial Director) and Katie George (Marketing Executive) visited the site mid-install to catch up with the installers and see ZIP-STRUT in action.</p>
+        <p>The feedback on the day was immediate — installers were particularly enthusiastic about the Tray Clip accessory, highlighting the speed and security it delivered compared to traditional methods.</p>
+
+        <div class="feature-pills" style="margin-top: 0;">
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">Pre-assembled off-site</span>
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">Timber-frame compatible</span>
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">Reusable basket tabs</span>
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">Tray Clip accessory</span>
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">UNI-Lock fixing</span>
+          <span class="pill" style="background: rgba(60,58,60,0.08); border-color: var(--charcoal); color: var(--charcoal);">Post-install adjustable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT HIGHLIGHT -->
+<div class="product-highlight">
+  <div class="product-highlight-inner">
+    <div>
+      <div class="section-tag">About ZIP-STRUT</div>
+      <h2>The smarter way to suspend multi-service containment</h2>
+      <p>ZIP-STRUT is Zip-Clip's pre-assembled strut suspension system, built to cut installation time without cutting corners. Every unit is assembled off-site to your specification — strut lengths, fixings, and accessories included — so it arrives on site ready to go straight up.</p>
+      <p>With a wide range of compatible fixing options, ZIP-STRUT works across concrete, timber, and steel structures, making it one of the most versatile suspension systems available for M&amp;E contractors.</p>
+      <div class="feature-pills">
+        <span class="pill">Pre-assembled to spec</span>
+        <span class="pill">Wide fixing range</span>
+        <span class="pill">Multi-service capable</span>
+        <span class="pill">Post-install adjustable</span>
+        <span class="pill">Tray Clip compatible</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-tag" style="color: rgba(255,130,0,0.8);">Key Outcomes</div>
+      <ul class="outcomes-list" style="margin-top: 8px;">
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Project design completed within 48 hours</li>
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Installation-ready solution delivered directly to site</li>
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Product installed and operational within a single day</li>
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Improved access for M&amp;E service installation and future maintenance</li>
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Reduced installation time compared to traditional bracketry methods</li>
+        <li style="border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75);">Ideal solution for a timber-framed construction environment</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<div class="calc-section">
+  <div class="calc-inner">
+    <div class="section-tag">Savings Calculator</div>
+    <h2>See how much time ZIP-STRUT could save on your next project</h2>
+    <p class="calc-sub">Based on Zip-Clip's internal installation time data. Compare ZIP-STRUT against traditional threaded rod and strut assembly.</p>
+    <div class="calc-grid">
+      <div class="calc-controls">
+        <div class="field-group">
+          <label>Number of suspension drops</label>
+          <span class="range-val" id="dropsVal">50</span>
+          <input type="range" id="dropsRange" min="10" max="500" value="50" step="10" oninput="updateCalc()">
+        </div>
+      </div>
+      <div>
+        <div class="calc-result">
+          <h3>Estimated time comparison</h3>
+          <div class="result-row">
+            <span>Threaded rod method (hours)</span>
+            <span id="tradHours">—</span>
+          </div>
+          <div class="result-row">
+            <span>ZIP-STRUT (hours)</span>
+            <span id="zcHours">—</span>
+          </div>
+          <div class="result-row highlight">
+            <span>Hours saved</span>
+            <span id="hoursSaved">—</span>
+          </div>
+          <div class="result-row highlight">
+            <span>Saving</span>
+            <span id="pctSaved">—</span>
+          </div>
+        </div>
+        <div class="saving-banner">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="11" stroke="#FF8200" stroke-width="2"/>
+            <path d="M12 7v5.5l3.5 2" stroke="#FF8200" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p id="savingText">Loading...</p>
+        </div>
+        <p class="calc-disclaimer">Based on Zip-Clip internal installation time data. Results are indicative and will vary by site conditions, installer experience and configuration. ZIP-STRUT installation time includes pre-assembly off-site; threaded rod time reflects full site assembly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT + BENEFIT -->
+<div class="section">
+  <div class="section-inner">
+    <div class="two-col">
+      <div>
+        <div class="section-tag">The Result</div>
+        <h2>Efficient installation. Minimal disruption. Project on schedule.</h2>
+        <p>The combination of fast design support, prefabricated components and practical training enabled Penguin to complete the installation efficiently and with minimal disruption to the wider construction programme.</p>
+        <p>By handling the design and specification work upfront — in collaboration with our in-house technical team — Penguin MEP arrived on site with everything they needed. No site fabrication, no delays, no wasted time.</p>
+      </div>
+      <div>
+        <div class="section-tag">Customer Benefit</div>
+        <h2>Complex challenge. Simple solution.</h2>
+        <p>By combining rapid design turnaround, technical expertise, and an installation-ready suspension system, Zip-Clip helped Penguin MEP simplify a complex containment challenge and keep the project moving on schedule.</p>
+        <p>The result was a cleaner, faster installation that gave the team improved access for M&amp;E services — and a system that's easy to maintain and modify in the future.</p>
+
+        <ul class="outcomes-list" style="margin-top: 24px;">
+          <li>Fast design support — project spec signed off in under 48 hours</li>
+          <li>Delivered pre-assembled, ready to install on arrival</li>
+          <li>Full single-day install in a restricted-access corridor</li>
+          <li>Compatible with timber-frame fixings via UNI-Lock</li>
+          <li>Tray Clip accessory dramatically reduced cable tray fixing time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Ready to specify ZIP-STRUT for your next project?</h2>
+  <p>Download the datasheet or speak to your local Zip-Clip Area Sales Manager.</p>
+  <a href="https://zip-clip.com/wp-content/uploads/2026/06/Zip-Strut-Datasheet.pdf" class="btn btn-white" target="_blank">Download Datasheet</a>
+  <a href="https://zip-clip.com/contact/" class="btn btn-outline-white" target="_blank">Get in Touch</a>
+</div>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  function updateCalc() {
+    var drops = parseInt(document.getElementById('dropsRange').value);
+
+    document.getElementById('dropsVal').textContent = drops;
+
+    // ZIP-STRUT: ~1 min 10 sec per drop on site (pre-assembled)
+    // Threaded rod: ~2 min 30 sec per drop (site assembly)
+    var zcMinsTotal = (1.167 * drops);
+    var tradMinsTotal = (4.024 * drops);
+
+    var zcHoursTotal = zcMinsTotal / 60;
+    var tradHoursTotal = tradMinsTotal / 60;
+    var saved = Math.max(0, tradHoursTotal - zcHoursTotal);
+    var pct = Math.round((saved / tradHoursTotal) * 100);
+
+    document.getElementById('tradHours').textContent = tradHoursTotal.toFixed(1) + ' hrs';
+    document.getElementById('zcHours').textContent = zcHoursTotal.toFixed(1) + ' hrs';
+    document.getElementById('hoursSaved').textContent = saved.toFixed(1) + ' hrs';
+    document.getElementById('pctSaved').textContent = pct + '% faster';
+    document.getElementById('savingText').innerHTML = 'For <strong>' + drops + ' drops</strong>, ZIP-STRUT is estimated to save approximately <strong>' + saved.toFixed(1) + ' hours</strong> of installation time — around <strong>' + pct + '% faster</strong> than traditional site-assembled threaded rod and strut.';
+  }
+
+  updateCalc();
+
+  // postMessage auto-resize for WordPress iframe
+  function sendHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ zcIframeHeight: h }, '*');
+  }
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  setInterval(sendHeight, 800);
+</script>
+</body>
+</html>
